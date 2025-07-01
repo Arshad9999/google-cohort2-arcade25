@@ -1,6 +1,5 @@
-
 import { useState } from 'react';
-import { Home, Calculator as CalculatorIcon, Share, Twitter, Linkedin, Whatsapp, Telegram, Facebook } from 'lucide-react';
+import { Home, Calculator as CalculatorIcon, Share, Twitter, Linkedin, MessageCircle, Send, Facebook } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -27,8 +26,8 @@ const Calculator = () => {
   const shareLinks = [
     { icon: Twitter, label: 'Twitter', url: 'https://twitter.com/intent/tweet?text=Check out this amazing Arcade Points Calculator!' },
     { icon: Linkedin, label: 'LinkedIn', url: 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(window.location.href) },
-    { icon: Whatsapp, label: 'WhatsApp', url: 'https://wa.me/?text=Check out this Arcade Points Calculator: ' + encodeURIComponent(window.location.href) },
-    { icon: Telegram, label: 'Telegram', url: 'https://t.me/share/url?url=' + encodeURIComponent(window.location.href) },
+    { icon: MessageCircle, label: 'WhatsApp', url: 'https://wa.me/?text=Check out this Arcade Points Calculator: ' + encodeURIComponent(window.location.href) },
+    { icon: Send, label: 'Telegram', url: 'https://t.me/share/url?url=' + encodeURIComponent(window.location.href) },
     { icon: Facebook, label: 'Facebook', url: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href) }
   ];
 
