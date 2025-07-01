@@ -57,7 +57,7 @@ const Index = () => {
                 <span className="font-semibold text-gray-900">Arcade Points</span>
               </a>
               <div className="hidden md:flex space-x-6">
-                <a href="/Calculator" className="text-gray-700 hover:text-blue-600 transition-colors font-medium flex items-center space-x-1">
+                <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors font-medium flex items-center space-x-1">
                   <Calculator className="w-4 h-4" />
                   <span>Calculator</span>
                 </a>
