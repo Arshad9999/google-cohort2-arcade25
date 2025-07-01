@@ -10,21 +10,10 @@ const Index = () => {
   };
 
   const programHighlights = [
-    {
-      title: "Facilitator Program",
-      description: "Guide and mentor others while earning rewards for enrolling 100+ people. Stay active on LinkedIn, YouTube, and collaborate to build a community.",
-      points: "Bonus Points + Community Impact"
-    },
-    {
-      title: "Individual Journey", 
-      description: "Enroll under a facilitator and earn swags and experience through labs and arcade points in the July-December 2025 cohort.",
-      points: "Arcade Points + Swags"
-    },
-    {
-      title: "Points System",
-      description: "Coming soon for Cohort 2! Earn Arcade + Bonus Points through games, trivia, and skill badges to redeem for Google Cloud goodies.",
-      points: "Redeem Prizes"
-    }
+    "No cost gaming campaign",
+    "Learn cloud skills", 
+    "Earn digital badges & points",
+    "Claim swag prizes and Google Cloud goodies"
   ];
 
   const faqs = [
@@ -61,15 +50,14 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-8">
-              <div className="flex items-center space-x-2">
+              <a href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                   <Home className="w-4 h-4 text-white" />
                 </div>
                 <span className="font-semibold text-gray-900">Arcade Points</span>
-              </div>
+              </a>
               <div className="hidden md:flex space-x-6">
-                <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">Home</a>
-                <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors font-medium flex items-center space-x-1">
+                <a href="/calculator" className="text-gray-700 hover:text-blue-600 transition-colors font-medium flex items-center space-x-1">
                   <Calculator className="w-4 h-4" />
                   <span>Calculator</span>
                 </a>
@@ -91,9 +79,14 @@ const Index = () => {
             Join the ultimate cloud learning journey. Earn points, unlock achievements, and become part of an amazing community.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            <a 
+              href="https://go.cloudskillsboost.google/arcade" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 inline-block"
+            >
               Get Started
-            </button>
+            </a>
             <button className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-full font-semibold hover:border-blue-500 hover:text-blue-600 transition-all duration-300">
               Learn More
             </button>
@@ -105,27 +98,49 @@ const Index = () => {
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Program Highlights</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Choose your path and start earning points while building valuable cloud skills
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {programHighlights.map((highlight, index) => (
-              <div key={index} className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-blue-200 transform hover:-translate-y-2">
-                <div className="mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-white font-bold text-lg">{index + 1}</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">Program Highlights</h2>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              {programHighlights.map((highlight, index) => (
+                <div key={index} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
+                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl mb-4 flex items-center justify-center mx-auto">
+                    <span className="text-white font-bold text-lg">✓</span>
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">{highlight.title}</h3>
-                  <p className="text-gray-600 leading-relaxed mb-4">{highlight.description}</p>
-                  <div className="inline-block bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium">
-                    {highlight.points}
-                  </div>
+                  <p className="text-gray-700 font-medium text-center">{highlight}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-3xl p-12 border border-gray-200 mb-8">
+              <h3 className="text-3xl font-bold text-gray-900 mb-6">Registration Opening Soon</h3>
+              
+              <div className="grid grid-cols-4 gap-4 max-w-md mx-auto mb-8">
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-blue-600 mb-2">0</div>
+                  <div className="text-sm text-gray-600 font-medium">Days</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-blue-600 mb-2">0</div>
+                  <div className="text-sm text-gray-600 font-medium">Hrs</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-blue-600 mb-2">0</div>
+                  <div className="text-sm text-gray-600 font-medium">Min</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-blue-600 mb-2">0</div>
+                  <div className="text-sm text-gray-600 font-medium">Sec</div>
                 </div>
               </div>
-            ))}
+              
+              <p className="text-xl text-gray-700 mb-6">
+                Please wait for Cohort 2 of the program in August/September '25
+              </p>
+              
+              <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300">
+                Learn more about the program
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -273,8 +288,8 @@ const Index = () => {
             <div>
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Home</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Calculator</a></li>
+                <li><a href="/" className="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                <li><a href="/calculator" className="text-gray-400 hover:text-white transition-colors">Calculator</a></li>
                 <li><a href="#" className="text-gray-400 hover:text-white transition-colors">About</a></li>
                 <li><a href="#faqs" className="text-gray-400 hover:text-white transition-colors">FAQs</a></li>
               </ul>
