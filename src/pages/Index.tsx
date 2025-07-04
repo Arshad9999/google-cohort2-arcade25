@@ -1,15 +1,43 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Home, Calculator, ChevronDown, ExternalLink, Users, MessageCircle, Mail, Share, Send, Youtube, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { saveProfileUrl } from '@/utils/profileStorage';
 
 const Index = () => {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [profileUrl, setProfileUrl] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  // Countdown timer effect
+  useEffect(() => {
+    const targetDate = new Date('August 4, 2025 17:00:00').getTime();
+    
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+      
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        
+        setTimeLeft({ days, hours, minutes, seconds });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+    
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   const toggleFaq = (index: number) => {
     setExpandedFaq(expandedFaq === index ? null : index);
@@ -20,6 +48,9 @@ const Index = () => {
       alert('Please enter a valid Google Cloud Skills Boost public profile URL');
       return;
     }
+    
+    // Save the profile URL
+    saveProfileUrl(profileUrl, rememberMe);
     
     setIsCalculating(true);
     setTimeout(() => {
@@ -102,8 +133,8 @@ const Index = () => {
   ];
 
   const shareLinks = [
-    { icon: MessageCircle, label: 'WhatsApp', url: 'https://chat.whatsapp.com/G2eYopB7F9i8uRtFhPPNOQ' },
-    { icon: Send, label: 'Telegram', url: 'https://t.me/+Ic455yX_OmM3YjVl' },
+    { icon: MessageCircle, label: 'WhatsApp', url: '#', disabled: true },
+    { icon: Send, label: 'Telegram', url: '#', disabled: true },
     { icon: Youtube, label: 'YouTube', url: 'https://www.youtube.com/@Arcade2025FacilitatorCohort2' },
     { icon: Linkedin, label: 'LinkedIn', url: 'https://www.linkedin.com/in/mohd-arshad-siddiqui-284048225/' }
   ];
@@ -126,7 +157,7 @@ const Index = () => {
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
                   <Home className="w-4 h-4 text-white" />
                 </div>
-                <span className="font-bold text-gray-900 text-lg">Arcade Points</span>
+                <span className="font-bold text-gray-900 text-lg">Arcade'25 (Cohort 2)</span>
               </a>
               <div className="hidden md:flex space-x-6">
                 <a href="#calculator" className="text-gray-700 hover:text-blue-600 transition-colors font-semibold flex items-center space-x-1">
@@ -156,9 +187,10 @@ const Index = () => {
               href="https://go.cloudskillsboost.google/arcade" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-bold hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 inline-block text-lg"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-bold hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 inline-flex items-center justify-center space-x-2 text-lg"
             >
-              Get Started
+              <span>Visit Official Website</span>
+              <ExternalLink className="w-5 h-5" />
             </a>
             <button className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-2xl font-bold hover:border-blue-500 hover:text-blue-600 transition-all duration-300 text-lg">
               Learn More
@@ -191,25 +223,25 @@ const Index = () => {
               
               <div className="grid grid-cols-4 gap-4 max-w-md mx-auto mb-8">
                 <div className="text-center">
-                  <div className="text-5xl font-black text-blue-600 mb-2">0</div>
+                  <div className="text-5xl font-black text-blue-600 mb-2">{timeLeft.days}</div>
                   <div className="text-sm text-gray-600 font-bold uppercase tracking-wider">Days</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-5xl font-black text-blue-600 mb-2">0</div>
+                  <div className="text-5xl font-black text-blue-600 mb-2">{timeLeft.hours}</div>
                   <div className="text-sm text-gray-600 font-bold uppercase tracking-wider">Hrs</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-5xl font-black text-blue-600 mb-2">0</div>
+                  <div className="text-5xl font-black text-blue-600 mb-2">{timeLeft.minutes}</div>
                   <div className="text-sm text-gray-600 font-bold uppercase tracking-wider">Min</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-5xl font-black text-blue-600 mb-2">0</div>
+                  <div className="text-5xl font-black text-blue-600 mb-2">{timeLeft.seconds}</div>
                   <div className="text-sm text-gray-600 font-bold uppercase tracking-wider">Sec</div>
                 </div>
               </div>
               
               <p className="text-2xl text-gray-700 mb-6 font-medium">
-                Please wait for <strong className="text-blue-600">Cohort 2</strong> of the program in <em>August/September '25</em>
+                Please wait for <strong className="text-blue-600">Cohort 2</strong> of the program starting <em>August 4th, 2025 at 5:00 PM</em>
               </p>
               
               <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 rounded-2xl font-bold hover:shadow-xl transition-all duration-300 text-lg">
@@ -370,12 +402,12 @@ const Index = () => {
                 </div>
                 <h3 className="text-3xl font-black text-gray-900 mb-4">Join <span className="text-green-600">WhatsApp</span></h3>
                 <p className="text-gray-600 mb-6 text-lg font-medium">Get instant updates and connect with the community</p>
-                <a href="https://chat.whatsapp.com/G2eYopB7F9i8uRtFhPPNOQ" target="_blank" rel="noopener noreferrer">
-                  <Button className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-2xl font-bold hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 text-lg">
-                    <span>Join Group</span>
-                    <ExternalLink className="w-5 h-5" />
-                  </Button>
-                </a>
+                <Button 
+                  className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-2xl font-bold hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 text-lg cursor-not-allowed opacity-50"
+                  disabled
+                >
+                  <span>Coming Soon</span>
+                </Button>
               </div>
             </Card>
 
@@ -405,12 +437,12 @@ const Index = () => {
                 </div>
                 <h3 className="text-3xl font-black text-gray-900 mb-4">Join <span className="text-blue-500">Telegram</span></h3>
                 <p className="text-gray-600 mb-6 text-lg font-medium">Stay connected and get real-time notifications</p>
-                <a href="https://t.me/+Ic455yX_OmM3YjVl" target="_blank" rel="noopener noreferrer">
-                  <Button className="w-full bg-gradient-to-r from-blue-400 to-blue-500 text-white py-4 rounded-2xl font-bold hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 text-lg">
-                    <span>Join Channel</span>
-                    <ExternalLink className="w-5 h-5" />
-                  </Button>
-                </a>
+                <Button 
+                  className="w-full bg-gradient-to-r from-blue-400 to-blue-500 text-white py-4 rounded-2xl font-bold hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 text-lg cursor-not-allowed opacity-50"
+                  disabled
+                >
+                  <span>Coming Soon</span>
+                </Button>
               </div>
             </Card>
 
@@ -439,18 +471,23 @@ const Index = () => {
           <h2 className="text-4xl font-black text-gray-900 mb-8 tracking-tight">Share This <span className="italic font-light text-blue-600">Tool</span></h2>
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             {shareLinks.map((social, index) => (
-              <a
+              <button
                 key={index}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center space-x-3 bg-white/90 hover:bg-white border border-gray-200 rounded-2xl px-6 py-4 transition-all duration-200 hover:shadow-lg group font-bold"
+                onClick={() => {
+                  if (!social.disabled && social.url !== '#') {
+                    window.open(social.url, '_blank');
+                  }
+                }}
+                disabled={social.disabled}
+                className={`flex items-center space-x-3 bg-white/90 hover:bg-white border border-gray-200 rounded-2xl px-6 py-4 transition-all duration-200 hover:shadow-lg group font-bold ${
+                  social.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+                }`}
               >
                 <social.icon className="w-6 h-6 text-gray-600 group-hover:text-blue-600 transition-colors" />
                 <span className="text-gray-700 group-hover:text-blue-600 transition-colors text-lg">
                   Share on {social.label}
                 </span>
-              </a>
+              </button>
             ))}
           </div>
           <Button
