@@ -1,6 +1,5 @@
 # Welcome to your Lovable project
-okhgfhg
-dsgfsg
+o
 
 ## Project info
 
