@@ -4,12 +4,12 @@ import { Home, Calculator, ChevronDown, ExternalLink, Users, MessageCircle, Mail
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { saveProfileUrl } from '@/utils/profileStorage';
+import { clearProfileEntries, getProfileEntries, normalizeProfileUrl, saveProfileUrl } from '@/utils/profileStorage';
 
 const Index = () => {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-  const [profileUrl, setProfileUrl] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
+  const [profileUrl, setProfileUrl] = useState(() => getProfileEntries()[0]?.url ?? '');
+  const [rememberMe, setRememberMe] = useState(() => getProfileEntries().length > 0);
   const [isCalculating, setIsCalculating] = useState(false);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -44,13 +44,14 @@ const Index = () => {
   };
 
   const handleCalculate = async () => {
-    if (!profileUrl.trim()) {
+    const normalizedUrl = normalizeProfileUrl(profileUrl);
+    if (!normalizedUrl) {
       alert('Please enter a valid Google Cloud Skills Boost public profile URL');
       return;
     }
     
     // Save the profile URL
-    saveProfileUrl(profileUrl, rememberMe);
+    saveProfileUrl(normalizedUrl, rememberMe);
     
     setIsCalculating(true);
     setTimeout(() => {
@@ -266,14 +267,7 @@ const Index = () => {
               Your <strong>ultimate companion</strong> for Google Cloud Arcade Journey! <span className="text-3xl">⚡</span>
             </p>
             <p className="text-sm text-gray-500 mb-8 font-mono">
-              Last Updated: {new Date().toLocaleString('en-GB', { 
-                day: '2-digit', 
-                month: '2-digit', 
-                year: 'numeric', 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit' 
-              })}
+              Historical 2025 cohort prototype
             </p>
           </div>
 
@@ -281,7 +275,7 @@ const Index = () => {
             <CardHeader className="text-center pb-6 bg-gradient-to-r from-blue-50/50 to-purple-50/50">
               <CardTitle className="text-3xl font-black text-gray-900">Calculate Your <em className="font-light italic text-blue-600">Arcade Points</em></CardTitle>
               <CardDescription className="text-gray-600 text-lg font-medium">
-                Enter your Google Cloud Skills Boost public profile URL to calculate your points
+                Calculator prototype: automatic profile lookup is not available yet. Remember me saves one profile on this device only.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6 p-8">
@@ -307,7 +301,10 @@ const Index = () => {
                   <input
                     type="checkbox"
                     checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
+                    onChange={(e) => {
+                      setRememberMe(e.target.checked);
+                      if (!e.target.checked) clearProfileEntries();
+                    }}
                     className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
                   <span className="text-lg text-gray-700 font-medium">Remember me</span>

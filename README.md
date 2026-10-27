@@ -49,7 +49,7 @@ flowchart LR
 
 ## Limitations
 
-This is a historical 2025 cohort site. Its countdown targets August 2025, and the home-page calculation action currently shows an under-development message. Profile URLs are currently saved in browser localStorage even when Remember Me is unchecked; review this behavior before collecting real user data. Program rules and FAQs require an owner review before reuse for a new cohort.
+This is a historical 2025 cohort site. Its countdown targets August 2025, and the home-page calculation action currently shows an under-development message. Profile persistence requires Remember Me consent, stores only the latest official profile URL, and clears saved data when consent is withdrawn. Legacy non-consenting records are purged. Browser storage failures are handled without crashing. Program rules and FAQs require an owner review before reuse for a new cohort.
 
 ## Provenance
 
