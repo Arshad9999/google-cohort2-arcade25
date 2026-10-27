@@ -1,3 +1,4 @@
+import { clearProfileEntries, getProfileEntries, normalizeProfileUrl, saveProfileUrl } from '@/utils/profileStorage';
 import { useState } from 'react';
 import { Home, Calculator as CalculatorIcon, Share, Twitter, Linkedin, MessageCircle, Send, Facebook } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -5,16 +6,18 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Calculator = () => {
-  const [profileUrl, setProfileUrl] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
+  const [profileUrl, setProfileUrl] = useState(() => getProfileEntries()[0]?.url ?? '');
+  const [rememberMe, setRememberMe] = useState(() => getProfileEntries().length > 0);
   const [isCalculating, setIsCalculating] = useState(false);
 
   const handleCalculate = async () => {
-    if (!profileUrl.trim()) {
+    const normalizedUrl = normalizeProfileUrl(profileUrl);
+    if (!normalizedUrl) {
       alert('Please enter a valid Google Cloud Skills Boost public profile URL');
       return;
     }
     
+    saveProfileUrl(normalizedUrl, rememberMe);
     setIsCalculating(true);
     // Simulate calculation process
     setTimeout(() => {
@@ -73,14 +76,7 @@ const Calculator = () => {
             Your ultimate companion for Google Cloud Arcade Journey! ⚡
           </p>
           <p className="text-sm text-gray-500 mb-8">
-            Last Updated: {new Date().toLocaleString('en-GB', { 
-              day: '2-digit', 
-              month: '2-digit', 
-              year: 'numeric', 
-              hour: '2-digit', 
-              minute: '2-digit', 
-              second: '2-digit' 
-            })}
+            Historical 2025 cohort prototype
           </p>
         </div>
       </section>
@@ -92,7 +88,7 @@ const Calculator = () => {
             <CardHeader className="text-center pb-6">
               <CardTitle className="text-2xl font-bold text-gray-900">Calculate Your Arcade Points</CardTitle>
               <CardDescription className="text-gray-600">
-                Enter your Google Cloud Skills Boost public profile URL to calculate your points
+                Calculator prototype: automatic profile lookup is not available yet. Remember me saves one profile on this device only.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -118,7 +114,10 @@ const Calculator = () => {
                   <input
                     type="checkbox"
                     checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
+                    onChange={(e) => {
+                      setRememberMe(e.target.checked);
+                      if (!e.target.checked) clearProfileEntries();
+                    }}
                     className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
                   <span className="text-sm text-gray-700">Remember me</span>
@@ -149,23 +148,23 @@ const Calculator = () => {
               },
               {
                 title: "Accurate Points",
-                description: "Precisely tracks your Arcade Points based on your profile progress and achievements."
+                description: "Planned: show a points breakdown after profile lookup is implemented."
               },
               {
                 title: "Live Tracking",
-                description: "Monitor your real-time progress toward milestones with detailed insights."
+                description: "Planned: display progress toward cohort milestones."
               },
               {
                 title: "Badge Summary",
-                description: "View a clear summary of all earned badges along with completion timestamps."
+                description: "Planned: show earned badges and their completion dates."
               },
               {
                 title: "Auto Updates",
-                description: "Stay aligned with the latest program announcements and guidelines to maximize benefits."
+                description: "Program information on this page describes the historical 2025 cohort."
               },
               {
                 title: "Chrome Extension",
-                description: "Calculate points directly from your browser with our Chrome extension."
+                description: "A browser extension is not available in this project."
               }
             ].map((feature, index) => (
               <Card key={index} className="border-0 shadow-lg bg-white/80 backdrop-blur-sm hover:shadow-xl transition-shadow duration-300">

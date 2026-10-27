@@ -1,66 +1,60 @@
-# Welcome to your Arshad's project
-o
-vbc
-## Project info
+# Google Cloud Arcade 2025 — Cohort 2
 
-**URL**: https://lovable.dev/projects/36eb159a-ae4d-4945-987a-854c5b02ee1f
-cvc
-s
+A React and TypeScript community information site with a calculator route and browser-local profile storage for the 2025 Arcade cohort.
 
-**Use your preferred IDE**
+## Demo
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+[Open the deployed site](https://google-cohort2-arcade25-facilitator.vercel.app). The homepage returned HTTP 200 on 27 October 2026; this is a reachability check, not a complete feature test.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Stack
 
-Follow these steps:
+React 18, TypeScript, Vite, Tailwind CSS, and shadcn/ui components.
+
+## Setup
+
+Use Node.js 24 and npm (Node.js 22.13 or newer in the 22.x line is also supported).
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+git clone https://github.com/Arshad9999/google-cohort2-arcade25.git
+cd google-cohort2-arcade25
+npm ci
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Open `http://localhost:8080`. The source currently requires no environment variables. Keep any future private credentials on a backend: values exposed through a client bundle are public.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Checks
 
-**Use GitHub Codespaces**
+```sh
+npm run build
+npm run lint
+npm test
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+`npm run preview` serves the production build locally. The `dist/` directory is the deployment output. A static host must serve `index.html` for client-side routes.
 
-## What technologies are used for this project?
+## Structure
 
-This project is built with:
+- `src/pages/`: route-level pages.
+- `src/components/`: application and shared UI components.
+- `src/App.tsx`: providers and browser routes.
+- `public/`: static files copied to the build.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```mermaid
+flowchart LR
+  Browser --> Router[React Router]
+  Router --> Pages[Page components]
+  Pages --> UI[Shared UI and static content]
+```
 
-## How can I deploy this project?
+## Limitations
 
-Simply open [Lovable](https://lovable.dev/projects/36eb159a-ae4d-4945-987a-854c5b02ee1f) and click on Share -> Publish.
+This is a historical 2025 cohort site. Its countdown targets August 2025, and the home-page calculation action currently shows an under-development message. Profile persistence requires Remember Me consent, stores only the latest official profile URL, and clears saved data when consent is withdrawn. Legacy non-consenting records are purged. Browser storage failures are handled without crashing. Program rules and FAQs require an owner review before reuse for a new cohort.
 
-## Can I connect a custom domain to my Lovable project?
+## Provenance
 
-Yes, you can!
+This repository was scaffolded with Lovable. Its history includes generated-code commits; repository ownership alone does not establish which parts were independently implemented.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## License
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+No repository-wide license was detected. No new license has been assigned; the owner must choose appropriate terms and verify rights to included material.
