@@ -2,15 +2,11 @@
 import { useState, useEffect } from 'react';
 import { Home, Calculator, ChevronDown, ExternalLink, Users, MessageCircle, Mail, Share, Send, Youtube, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { clearProfileEntries, getProfileEntries, normalizeProfileUrl, saveProfileUrl } from '@/utils/profileStorage';
+import ArcadePointsCalculator from '@/components/ArcadePointsCalculator';
 
 const Index = () => {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-  const [profileUrl, setProfileUrl] = useState(() => getProfileEntries()[0]?.url ?? '');
-  const [rememberMe, setRememberMe] = useState(() => getProfileEntries().length > 0);
-  const [isCalculating, setIsCalculating] = useState(false);
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   // Countdown timer effect
@@ -41,23 +37,6 @@ const Index = () => {
 
   const toggleFaq = (index: number) => {
     setExpandedFaq(expandedFaq === index ? null : index);
-  };
-
-  const handleCalculate = async () => {
-    const normalizedUrl = normalizeProfileUrl(profileUrl);
-    if (!normalizedUrl) {
-      alert('Please enter a valid Google Cloud Skills Boost public profile URL');
-      return;
-    }
-    
-    // Save the profile URL
-    saveProfileUrl(normalizedUrl, rememberMe);
-    
-    setIsCalculating(true);
-    setTimeout(() => {
-      setIsCalculating(false);
-      alert('This feature is currently under development. Please check back later!');
-    }, 2000);
   };
 
   const programHighlights = [
@@ -275,49 +254,11 @@ const Index = () => {
             <CardHeader className="text-center pb-6 bg-gradient-to-r from-blue-50/50 to-purple-50/50">
               <CardTitle className="text-3xl font-black text-gray-900">Calculate Your <em className="font-light italic text-blue-600">Arcade Points</em></CardTitle>
               <CardDescription className="text-gray-600 text-lg font-medium">
-                Calculator prototype: automatic profile lookup is not available yet. Remember me saves one profile on this device only.
+                Enter badge counts manually to apply the documented historical 2025 point formula.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6 p-8">
-              <div className="space-y-2">
-                <label htmlFor="profile-url" className="text-lg font-bold text-gray-700">
-                  Paste <span className="text-blue-600">Public-Profile-URL</span> here
-                </label>
-                <Input
-                  id="profile-url"
-                  type="url"
-                  placeholder="https://www.cloudskillsboost.google/public_profiles/..."
-                  value={profileUrl}
-                  onChange={(e) => setProfileUrl(e.target.value)}
-                  className="h-14 text-lg rounded-2xl border-2 border-gray-200 focus:border-blue-500 transition-colors"
-                />
-              </div>
-
-              <div className="flex items-center justify-between">
-                <a href="#help" className="text-blue-600 hover:text-blue-700 text-lg font-bold transition-colors">
-                  Get help
-                </a>
-                <label className="flex items-center space-x-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => {
-                      setRememberMe(e.target.checked);
-                      if (!e.target.checked) clearProfileEntries();
-                    }}
-                    className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <span className="text-lg text-gray-700 font-medium">Remember me</span>
-                </label>
-              </div>
-
-              <Button
-                onClick={handleCalculate}
-                disabled={isCalculating}
-                className="w-full h-14 text-xl font-black bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 rounded-2xl shadow-lg hover:shadow-xl"
-              >
-                {isCalculating ? 'Calculating...' : 'Calculate'}
-              </Button>
+            <CardContent className="p-8">
+              <ArcadePointsCalculator idPrefix="home-calculator" />
             </CardContent>
           </Card>
         </div>
