@@ -1,6 +1,6 @@
 # Google Cloud Arcade 2025 — Cohort 2
 
-A React and TypeScript community information site with a calculator route and browser-local profile storage for the 2025 Arcade cohort.
+A React and TypeScript community information site with a manual badge-points calculator for the historical 2025 Arcade cohort.
 
 ## Demo
 
@@ -49,7 +49,7 @@ flowchart LR
 
 ## Limitations
 
-This is a historical 2025 cohort site. Its countdown targets August 2025, and the home-page calculation action currently shows an under-development message. Profile persistence requires Remember Me consent, stores only the latest official profile URL, and clears saved data when consent is withdrawn. Legacy non-consenting records are purged. Browser storage failures are handled without crashing. Program rules and FAQs require an owner review before reuse for a new cohort.
+This is a historical 2025 cohort site. Its countdown targets August 2025. The calculator applies the point weights documented in this repository to manually entered badge counts; it does not fetch or verify Google Cloud profiles. The existing profile-storage utility retains consent and failure-handling tests but is no longer used by the calculator interface. Program rules and FAQs require an owner review before reuse for a new cohort.
 
 ## Provenance
 

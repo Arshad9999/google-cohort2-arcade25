@@ -1,31 +1,9 @@
-import { clearProfileEntries, getProfileEntries, normalizeProfileUrl, saveProfileUrl } from '@/utils/profileStorage';
-import { useState } from 'react';
 import { Home, Calculator as CalculatorIcon, Share, Twitter, Linkedin, MessageCircle, Send, Facebook } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import ArcadePointsCalculator from '@/components/ArcadePointsCalculator';
 
 const Calculator = () => {
-  const [profileUrl, setProfileUrl] = useState(() => getProfileEntries()[0]?.url ?? '');
-  const [rememberMe, setRememberMe] = useState(() => getProfileEntries().length > 0);
-  const [isCalculating, setIsCalculating] = useState(false);
-
-  const handleCalculate = async () => {
-    const normalizedUrl = normalizeProfileUrl(profileUrl);
-    if (!normalizedUrl) {
-      alert('Please enter a valid Google Cloud Skills Boost public profile URL');
-      return;
-    }
-    
-    saveProfileUrl(normalizedUrl, rememberMe);
-    setIsCalculating(true);
-    // Simulate calculation process
-    setTimeout(() => {
-      setIsCalculating(false);
-      alert('This feature is currently under development. Please check back later!');
-    }, 2000);
-  };
-
   const shareLinks = [
     { icon: Twitter, label: 'Twitter', url: 'https://twitter.com/intent/tweet?text=Check out this amazing Arcade Points Calculator!' },
     { icon: Linkedin, label: 'LinkedIn', url: 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(window.location.href) },
@@ -88,49 +66,11 @@ const Calculator = () => {
             <CardHeader className="text-center pb-6">
               <CardTitle className="text-2xl font-bold text-gray-900">Calculate Your Arcade Points</CardTitle>
               <CardDescription className="text-gray-600">
-                Calculator prototype: automatic profile lookup is not available yet. Remember me saves one profile on this device only.
+                Enter badge counts manually to apply the documented historical 2025 point formula.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <label htmlFor="profile-url" className="text-sm font-medium text-gray-700">
-                  Paste Public-Profile-URL here
-                </label>
-                <Input
-                  id="profile-url"
-                  type="url"
-                  placeholder="https://www.cloudskillsboost.google/public_profiles/..."
-                  value={profileUrl}
-                  onChange={(e) => setProfileUrl(e.target.value)}
-                  className="h-12 text-base"
-                />
-              </div>
-
-              <div className="flex items-center justify-between">
-                <a href="#help" className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors">
-                  Get help
-                </a>
-                <label className="flex items-center space-x-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => {
-                      setRememberMe(e.target.checked);
-                      if (!e.target.checked) clearProfileEntries();
-                    }}
-                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <span className="text-sm text-gray-700">Remember me</span>
-                </label>
-              </div>
-
-              <Button
-                onClick={handleCalculate}
-                disabled={isCalculating}
-                className="w-full h-12 text-lg font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all duration-200"
-              >
-                {isCalculating ? 'Calculating...' : 'Calculate'}
-              </Button>
+            <CardContent>
+              <ArcadePointsCalculator idPrefix="calculator-page" />
             </CardContent>
           </Card>
         </div>
